@@ -1,7 +1,13 @@
 import re
 
-ficheiro = open('ActiveSitesFound.txt')
+archiveName = 'ActiveSitesFound.txt'
+ficheiro = open(archiveName)
 text = ficheiro.readlines()
+
+if(archiveName[-3:]=='csv'):
+  text = text[2:]
+
+
 activeSites = []
 counter = 0;
 for linha in text:
@@ -14,12 +20,11 @@ for linha in text:
   finalArray = []
   finalArray= ligationsString.split(';')
   finalArray.append(templateCode)
+  finalArray.append(str(counter))
   activeSites.insert(counter,finalArray)
   activeSites[counter].sort()
   counter= counter +1;
 
-
 print(activeSites)
-  
 
 
