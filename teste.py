@@ -20,9 +20,9 @@ for linha in text:
   finalArray = []
   finalArray= ligationsString.split(';')
   finalArray.append(templateCode)
-  finalArray.append(str(counter))
   activeSites.insert(counter,finalArray)
   activeSites[counter].sort()
+  activeSites[counter].append(str(counter))
   counter= counter +1;
 
 print(activeSites)
