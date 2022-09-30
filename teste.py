@@ -24,7 +24,7 @@ counter = 0;
 textList =[]
 for linha in text:
   words = linha.split()
-  textList.append(words)
+  textList.append(linha.split("\t"))
   stringWithSpaces= " ".join(words[3:])
   templateMatch = re.search(r'[a-zA-Z0-9]{4}',stringWithSpaces)
   templatePos = templateMatch.start()
@@ -43,9 +43,15 @@ print(linesToMantain)
 treatedText = []
 for num in linesToMantain:
   treatedLine = textList[num]
+  print(treatedLine)
   treatedLine[1] = str(counter);
   counter += 1;
   treatedText.append(' '.join(treatedLine))
+ficheiro.close()
+treatedFile = open("treated"+archiveName,"w")
 
 for member in treatedText:
+  treatedFile.write(member)
   print(member)
+
+treatedFile.close()
