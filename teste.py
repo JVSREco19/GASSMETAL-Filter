@@ -10,11 +10,11 @@ def remove_repetidos(lista):
       else:
         removeCounter+=1;
       l.sort()
-    print(removeCounter)
+    print(str(removeCounter)+ " Removed")
     return l
 
 
-archiveName = 'ActiveSitesFound (3).txt'
+archiveName = 'ActiveSitesFound.txt'
 ficheiro = open(archiveName)
 text = ficheiro.readlines()
 linesToMantain = []
@@ -30,7 +30,7 @@ for linha in text:
   words = linha.split()
   textList.append(linha.split("\t"))
   stringWithSpaces= " ".join(words[3:])
-  templateMatch = re.search(r'[a-zA-Z]{4}|[0-9]{3}[a-zA-Z]|[a-zA-Z][0-9]{3}|[a-zA-Z]{3}[0-9]|[0-9][a-zA-Z]{3}|[0-9]{2}[a-zA-Z][0-9]|[0-9][a-zA-Z][0-9]{2}|[a-zA-Z][0-9]{2}[a-zA-Z]|[0-9][a-zA-Z]{2}[0-9]|[0-9]{2}[a-zA-Z]{2}|[a-zA-Z]{2}[0-9]{2}|[a-zA-Z][0-9][a-zA-Z][0-9]|[0-9][a-zA-Z][0-9][a-zA-Z]',stringWithSpaces)
+  templateMatch = re.search(r'[a-zA-Z][a-zA-Z0-9]{3}|[a-zA-Z0-9][a-zA-Z][a-zA-Z0-9]{2}|[a-zA-Z0-9]{2}[a-zA-Z][a-zA-Z0-9]|[a-zA-Z0-9]{3}[a-zA-Z]',stringWithSpaces)
   templatePos = templateMatch.start()
   templateCode = templateMatch.group()
   ligationsString = stringWithSpaces[:templatePos-1]
@@ -41,10 +41,10 @@ for linha in text:
   activeSites[counter].append(str(counter))
   counter= counter +1;
 counter = 0;
+
 activeSites= remove_repetidos(activeSites)
 activeSites.sort()
-for line in activeSites:
-  print(line)
+
 treatedText = []
 for num in linesToMantain:
   if(counter==100):
