@@ -10,6 +10,7 @@ def remove_repetidos(lista):
         linesToMantain.append(int(i[len(i)-1]))
       else:
         removeCounter+=1;
+        repeatedLines.append(i)
       l.sort()
     print(str(removeCounter)+ " Removed")
     return l
@@ -22,46 +23,68 @@ for filename in os.listdir(os.getcwd()):
     ficheiro = open(archiveName)
     text = ficheiro.readlines()
     linesToMantain = []
-
+    repeatedLines = []
     if(archiveName[-3:]=='csv'):
       text = text[2:]
-
 
     activeSites = []
     counter = 0;
     textList =[]
     for linha in text:
       words = linha.split()
-      textList.append(linha.split("\t"))
+      textList.append(linha.split())
       stringWithSpaces= " ".join(words[3:])
-      templateMatch = re.search(r'[a-zA-Z][a-zA-Z0-9]{3}|[a-zA-Z0-9][a-zA-Z][a-zA-Z0-9]{2}|[a-zA-Z0-9]{2}[a-zA-Z][a-zA-Z0-9]|[a-zA-Z0-9]{3}[a-zA-Z]',stringWithSpaces)
-      templatePos = templateMatch.start()
-      templateCode = templateMatch.group()
-      ligationsString = stringWithSpaces[:templatePos-1]
-      finalArray= ligationsString.split(';')
-      finalArray.append(templateCode)
-      activeSites.insert(counter,finalArray)
-      activeSites[counter].sort()
-      activeSites[counter].append(str(counter))
+      templateMatch = re.search(r'\b[a-zA-Z][a-zA-Z0-9]{3}\b|\b[a-zA-Z0-9][a-zA-Z][a-zA-Z0-9]{2}\b|\b[a-zA-Z0-9]{2}[a-zA-Z][a-zA-Z0-9]\b|\b[a-zA-Z0-9]{3}[a-zA-Z]\b',stringWithSpaces)
+
+      if templateMatch != None:
+        templatePos = templateMatch.start()
+        templateCode = templateMatch.group()
+        ligationsString = stringWithSpaces[:templatePos-1]
+        finalArray= ligationsString.split(';')
+        findHifen = re.search(r'-',''.join(finalArray))
+        if findHifen!= None or templateCode =="NULL":
+          activeSites.insert(counter,finalArray)
+          aux = []
+          aux.extend(activeSites[0])
+          aux[len(aux)-1] = counter
+          activeSites[counter]= aux
+          
+          
+        else:  
+          finalArray.append(templateCode)
+          activeSites.insert(counter,finalArray)
+          activeSites[counter].sort()
+          activeSites[counter].append(str(counter))
+      else:
+        activeSites.insert(counter,finalArray)
+        aux = []
+        aux.extend(activeSites[0])
+        aux[len(aux)-1] = counter
+        
+        activeSites[counter]= aux
+      
       counter= counter +1;
     counter = 0;
 
-    activeSites= remove_repetidos(activeSites)
-    activeSites.sort()
+    remove_repetidos(activeSites)
+ 
 
     treatedText = []
     for num in linesToMantain:
       if(counter==100):
         counter =0
+      
       treatedLine = textList[num]
       treatedLine[1] = str(counter);
       counter += 1;
-      treatedText.append(' '.join(treatedLine))
+      treatedLineStr = ' '.join(treatedLine)
+      treatedText.append(treatedLineStr)
+      
+      
     ficheiro.close()
     treatedFile = open("treated"+archiveName,"w")
-
     for member in treatedText:
-      treatedFile.write(member)
-
+      treatedFile.write(member+'\n')
+    
 
     treatedFile.close()
