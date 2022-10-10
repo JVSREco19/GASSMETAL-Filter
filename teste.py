@@ -11,6 +11,7 @@ def remove_repetidos(lista):
       else:
         removeCounter+=1;
         repeatedLines.append(i)
+      
       l.sort()
     print(str(removeCounter)+ " Removed")
     return l
@@ -50,7 +51,8 @@ for filename in os.listdir(os.getcwd()):
           activeSites[counter]= aux
           
           
-        else:  
+        else:
+          templateCode =stringWithSpaces[templatePos:len(stringWithSpaces)-1]
           finalArray.append(templateCode)
           activeSites.insert(counter,finalArray)
           activeSites[counter].sort()
