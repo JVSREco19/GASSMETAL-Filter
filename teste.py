@@ -3,21 +3,22 @@ import os
 
 def remove_repetidos(lista):
     l = []
+    l.append(aux)
     removeCounter = 0;
     for i in lista:
-      if i[0:len(i)-1] not in l:
+      if i[0:len(i)-1] not in l and i!= aux:
         l.append(i[0:len(i)-1])
         linesToMantain.append(int(i[len(i)-1]))
+
       else:
         removeCounter+=1;
-        repeatedLines.append(i)
-      
+    
       l.sort()
     print(str(removeCounter)+ " Removed")
     return l
 
 for filename in os.listdir(os.getcwd()):
-  
+  aux = ['template','ligations','counter']
   archiveName =  filename
   if archiveName[len(archiveName)-3:len(archiveName)] =='txt' and archiveName[0:7]!='treated':
     print("Opening {} file".format(archiveName))
@@ -45,12 +46,7 @@ for filename in os.listdir(os.getcwd()):
         findHifen = re.search(r'-',''.join(finalArray))
         if findHifen!= None or templateCode =="NULL":
           activeSites.insert(counter,finalArray)
-          aux = []
-          aux.extend(activeSites[0])
-          aux[len(aux)-1] = counter
           activeSites[counter]= aux
-          
-          
         else:
           templateCode =stringWithSpaces[templatePos:len(stringWithSpaces)-1]
           finalArray.append(templateCode)
@@ -59,23 +55,18 @@ for filename in os.listdir(os.getcwd()):
           activeSites[counter].append(str(counter))
       else:
         activeSites.insert(counter,finalArray)
-        aux = []
-        aux.extend(activeSites[0])
-        aux[len(aux)-1] = counter
-        
         activeSites[counter]= aux
       
       counter= counter +1;
     counter = 0;
 
     remove_repetidos(activeSites)
- 
-
+    
     treatedText = []
+
     for num in linesToMantain:
       if(counter==100):
         counter =0
-      
       treatedLine = textList[num]
       treatedLine[1] = str(counter);
       counter += 1;
@@ -85,8 +76,10 @@ for filename in os.listdir(os.getcwd()):
       
     ficheiro.close()
     treatedFile = open("treated"+archiveName,"w")
+
+
     for member in treatedText:
       treatedFile.write(member+'\n')
     
-
     treatedFile.close()
+    
