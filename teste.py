@@ -33,7 +33,7 @@ if archiveName[len(archiveName)-3:len(archiveName)] =='txt' and archiveName[0:7]
   textList =[]
   for linha in text:
     words = linha.split()
-    textList.append(linha.split())
+    textList.append(linha.split('\t'))
     stringWithSpaces= " ".join(words[3:])
     templateMatch = re.search(r'\b[a-zA-Z][a-zA-Z0-9]{3}\b|\b[a-zA-Z0-9][a-zA-Z][a-zA-Z0-9]{2}\b|\b[a-zA-Z0-9]{2}[a-zA-Z][a-zA-Z0-9]\b|\b[a-zA-Z0-9]{3}[a-zA-Z]\b',stringWithSpaces)
 
@@ -58,9 +58,9 @@ if archiveName[len(archiveName)-3:len(archiveName)] =='txt' and archiveName[0:7]
     
     counter= counter +1;
   counter = 0;
-
   remove_repetidos(activeSites)
   
+  print(textList)
   treatedText = []
 
   for num in linesToMantain:
@@ -69,7 +69,7 @@ if archiveName[len(archiveName)-3:len(archiveName)] =='txt' and archiveName[0:7]
     treatedLine = textList[num]
     treatedLine[1] = str(counter);
     counter += 1;
-    treatedLineStr = ' '.join(treatedLine)
+    treatedLineStr = '\t'.join(treatedLine)
     treatedText.append(treatedLineStr)
     
     
@@ -78,7 +78,7 @@ if archiveName[len(archiveName)-3:len(archiveName)] =='txt' and archiveName[0:7]
 
 
   for member in treatedText:
-    treatedFile.write(member+'\n')
+    treatedFile.write(member)
   
   treatedFile.close()
   
