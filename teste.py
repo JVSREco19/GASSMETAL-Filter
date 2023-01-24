@@ -60,7 +60,7 @@ if archiveName[len(archiveName)-3:len(archiveName)] =='txt' and archiveName[0:7]
   counter = 0;
   remove_repetidos(activeSites)
   
-  print(textList)
+  
   treatedText = []
 
   for num in linesToMantain:
