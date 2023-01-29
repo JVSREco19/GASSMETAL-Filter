@@ -1,5 +1,5 @@
 import re
-
+archiveName = 'ActiveSitesFound.txt'
 def remove_repetidos(lista):
     l = []
     l.append(aux)
@@ -18,7 +18,6 @@ def remove_repetidos(lista):
 
 
 aux = ['template','ligations','counter']
-archiveName =  'ActiveSitesFound.txt'
 if archiveName[len(archiveName)-3:len(archiveName)] =='txt' and archiveName[0:7]!='treated':
   print("Opening {} file".format(archiveName))
   ficheiro = open(archiveName)
