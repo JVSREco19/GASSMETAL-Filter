@@ -1,24 +1,25 @@
 import re
-archiveName = 'ActiveSitesFound.txt'
-def remove_repetidos(lista):
+archiveName = 'teste1.sorted'
+
+
+def main():
+  aux = ['template', 'ligations', 'counter']
+  def remove_repetidos(lista):
     l = []
     l.append(aux)
-    removeCounter = 0;
+    removeCounter = 0
     for i in lista:
-      if i[0:len(i)-1] not in l and i!= aux:
+      if i[0:len(i)-1] not in l and i != aux:
         l.append(i[0:len(i)-1])
         linesToMantain.append(int(i[len(i)-1]))
 
       else:
-        removeCounter+=1;
-    
+        removeCounter += 1
+
       l.sort()
-    print(str(removeCounter)+ " Removed")
+    print(str(removeCounter) + " Removed")
     return l
-
-
-aux = ['template','ligations','counter']
-if archiveName[len(archiveName)-3:len(archiveName)] =='txt' and archiveName[0:7]!='treated':
+  
   print("Opening {} file".format(archiveName))
   ficheiro = open(archiveName)
   text = ficheiro.readlines()
@@ -46,7 +47,6 @@ if archiveName[len(archiveName)-3:len(archiveName)] =='txt' and archiveName[0:7]
         activeSites.insert(counter,finalArray)
         activeSites[counter]= aux
       else:
-        templateCode =stringWithSpaces[templatePos:len(stringWithSpaces)-1]
         finalArray.append(templateCode)
         activeSites.insert(counter,finalArray)
         activeSites[counter].sort()
@@ -58,8 +58,7 @@ if archiveName[len(archiveName)-3:len(archiveName)] =='txt' and archiveName[0:7]
     counter= counter +1;
   counter = 0;
   remove_repetidos(activeSites)
-  
-  
+
   treatedText = []
 
   for num in linesToMantain:
@@ -78,6 +77,11 @@ if archiveName[len(archiveName)-3:len(archiveName)] =='txt' and archiveName[0:7]
 
   for member in treatedText:
     treatedFile.write(member)
-  
+
   treatedFile.close()
-  
+
+
+if __name__ == "__main__":
+    for i in range(1,7):
+      archiveName = "teste"+str(i)+".sorted"
+      main()
