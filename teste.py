@@ -82,6 +82,5 @@ def main():
 
 
 if __name__ == "__main__":
-    for i in range(1,7):
-      archiveName = "teste"+str(i)+".sorted"
-      main()
+    
+  main()
